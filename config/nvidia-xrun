@@ -14,10 +14,12 @@ ENABLE_PM=1
 REMOVE_DEVICE=1
 
 # Bus ID of the PCI express controller
-CONTROLLER_BUS_ID=0000:00:01.0
+CONTROLLER_BUS_ID=0000:00:01.1
 
 # Bus ID of the graphic card
 DEVICE_BUS_ID=0000:01:00.0
+# Audio Device
+AUDIO_DEVICE_BUS_ID=0000:01:00.1
 
 # Seconds to wait before turning on the card after PCI devices rescan
 BUS_RESCAN_WAIT_SEC=1
