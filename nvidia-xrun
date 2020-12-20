@@ -22,9 +22,13 @@ function turn_off_gpu {
   if [[ "$REMOVE_DEVICE" == '1' ]]; then
     echo 'Removing Nvidia bus from the kernel'
     execute "sudo tee /sys/bus/pci/devices/${DEVICE_BUS_ID}/remove <<<1"
+	echo "Removing Nvidia audio bus from kernel"
+	execute "sudo tee /sys/bus/pci/devices/${AUDIO_DEVICE_BUS_ID}/remove <<<1"
   else
     echo 'Enabling powersave for the graphic card'
     execute "sudo tee /sys/bus/pci/devices/${DEVICE_BUS_ID}/power/control <<<auto"
+	echo "Enabling powersave for the audio device attached to the card"
+	execute "sudo tee /sys/bus/pci/devices/${AUDIO_DEVICE_BUS_ID}/power/control <<<auto"
   fi
 
   echo 'Enabling powersave for the PCIe controller'
@@ -47,6 +51,7 @@ function turn_on_gpu {
 
   echo 'Turning the card on'
   execute "sudo tee /sys/bus/pci/devices/${DEVICE_BUS_ID}/power/control <<<on"
+  execute "sudo tee /sys/bus/pci/devices/${AUDIO_DEVICE_BUS_ID}/power/control <<<on"
 }
 
 function load_modules {
