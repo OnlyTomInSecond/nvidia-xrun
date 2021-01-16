@@ -1,0 +1,169 @@
+Section "ServerLayout"
+	Identifier     "X.org Configured"
+	Screen      1  "Screen0" 0 0 # there starts frome 1 to avoid conflict
+#	Screen		1  "Screen1"
+	Screen      2  "Screen1" RightOf "Screen0" # Avoid conflict 
+#	Inactive	   "Screen0"
+	InputDevice    "Mouse0" "CorePointer"
+	InputDevice    "Keyboard0" "CoreKeyboard"
+EndSection
+
+Section "Files"
+	ModulePath "/usr/lib/nvidia"
+	ModulePath "/usr/lib32/nvidia"
+	ModulePath "/usr/lib32/nvidia/xorg/modules"
+	ModulePath "/usr/lib32/xorg/modules"
+	ModulePath "/usr/lib64/nvidia/xorg/modules"
+	ModulePath "/usr/lib64/nvidia/xorg"
+	ModulePath "/usr/lib64/xorg/modules"
+	ModulePath   "/usr/lib/xorg/modules"
+	FontPath     "/usr/share/fonts/X11/misc"
+	FontPath     "/usr/share/fonts/X11/cyrillic"
+	FontPath     "/usr/share/fonts/X11/100dpi/:unscaled"
+	FontPath     "/usr/share/fonts/X11/75dpi/:unscaled"
+	FontPath     "/usr/share/fonts/X11/Type1"
+	FontPath     "/usr/share/fonts/X11/100dpi"
+	FontPath     "/usr/share/fonts/X11/75dpi"
+	FontPath     "built-ins"
+EndSection
+
+Section "Module"
+	Load  "glxserver_nvidia"
+	Load  "glx"
+#	Load  "modesetting"
+EndSection
+
+Section "InputDevice"
+	Identifier  "Keyboard0"
+	Driver      "kbd"
+EndSection
+
+Section "InputDevice"
+	Identifier  "Mouse0"
+	Driver      "mouse"
+	Option	    "Protocol" "auto"
+	Option	    "Device" "/dev/input/mice"
+	Option	    "ZAxisMapping" "4 5 6 7"
+EndSection
+
+Section "Monitor"
+	Identifier   "Monitor0"
+	VendorName   "Monitor Vendor"
+	ModelName    "Monitor Model"
+EndSection
+
+Section "Monitor"
+	Identifier   "Monitor1"
+	VendorName   "Monitor Vendor"
+	ModelName    "Monitor Model"
+EndSection
+
+Section "Device"
+        ### Available Driver options are:-
+        ### Values: <i>: integer, <f>: float, <bool>: "True"/"False",
+        ### <string>: "String", <freq>: "<f> Hz/kHz/MHz",
+        ### <percent>: "<f>%"
+        ### [arg]: arg optional
+        #Option     "Accel"              	# [<bool>]
+        #Option     "SWcursor"           	# [<bool>]
+        #Option     "EnablePageFlip"     	# [<bool>]
+        #Option     "SubPixelOrder"      	# [<str>]
+        #Option     "ZaphodHeads"        	# <str>
+        #Option     "AccelMethod"        	# <str>
+        #Option     "DRI3"               	# [<bool>]
+        #Option     "DRI"                	# <i>
+        #Option     "ShadowPrimary"      	# [<bool>]
+        #Option     "TearFree"           	# [<bool>]
+        #Option     "DeleteUnusedDP12Displays" 	# [<bool>]
+        #Option     "VariableRefresh"    	# [<bool>]
+	Identifier  "Card0"
+	Driver      "amdgpu"
+	BusID       "PCI:6:0:0"
+EndSection
+
+Section "Device"
+        ### Available Driver options are:-
+        ### Values: <i>: integer, <f>: float, <bool>: "True"/"False",
+        ### <string>: "String", <freq>: "<f> Hz/kHz/MHz",
+        ### <percent>: "<f>%"
+        ### [arg]: arg optional
+        #Option     "SWcursor"           	# [<bool>]
+        #Option     "HWcursor"           	# [<bool>]
+        #Option     "NoAccel"            	# [<bool>]
+        #Option     "ShadowFB"           	# [<bool>]
+        #Option     "VideoKey"           	# <i>
+        #Option     "WrappedFB"          	# [<bool>]
+        #Option     "GLXVBlank"          	# [<bool>]
+        #Option     "ZaphodHeads"        	# <str>
+        #Option     "PageFlip"           	# [<bool>]
+        #Option     "SwapLimit"          	# <i>
+        #Option     "AsyncUTSDFS"        	# [<bool>]
+        #Option     "AccelMethod"        	# <str>
+        #Option     "DRI"                	# <i>
+	Identifier  "Card1"
+	Driver      "nvidia" # Use the non-free nvidia driver 
+	BusID       "PCI:1:0:0" # Set the right pci id of Gpu
+EndSection
+
+Section "Screen"
+	Identifier "Screen0"
+	Device     "Card0"
+	Monitor    "Monitor0"
+	SubSection "Display"
+		Viewport   0 0
+		Depth     1
+	EndSubSection
+	SubSection "Display"
+		Viewport   0 0
+		Depth     4
+	EndSubSection
+	SubSection "Display"
+		Viewport   0 0
+		Depth     8
+	EndSubSection
+	SubSection "Display"
+		Viewport   0 0
+		Depth     15
+	EndSubSection
+	SubSection "Display"
+		Viewport   0 0
+		Depth     16
+	EndSubSection
+	SubSection "Display"
+		Viewport   0 0
+		Depth     24
+	EndSubSection
+EndSection
+
+Section "Screen"
+	Identifier "Screen1"
+	Device     "Card1"
+	Monitor    "Monitor1"
+	Option "AllowEmptyInitialConfiguration" "Yes"
+	Option "UseDisplayDevice" "none"
+	SubSection "Display"
+		Viewport   0 0
+		Depth     1
+	EndSubSection
+	SubSection "Display"
+		Viewport   0 0
+		Depth     4
+	EndSubSection
+	SubSection "Display"
+		Viewport   0 0
+		Depth     8
+	EndSubSection
+	SubSection "Display"
+		Viewport   0 0
+		Depth     15
+	EndSubSection
+	SubSection "Display"
+		Viewport   0 0
+		Depth     16
+	EndSubSection
+	SubSection "Display"
+		Viewport   0 0
+		Depth     24
+	EndSubSection
+EndSection
+
