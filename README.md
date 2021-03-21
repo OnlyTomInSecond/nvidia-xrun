@@ -17,16 +17,6 @@ These utility scripts aim to make the life easier for nvidia cards users.It star
   - run `nvidia-xrun [app]`
   - enjoy
 
-## Installtion ##
-
-To use this , just simplely run 
-
-```
-# ./install.sh
-```
-
-
-
 Currently sudo is required as the script needs to wake up GPU, modprobe the nvidia driver and perform cleanup afterwards.
 
 The systemd service can be used to completely remove the card from the kernel device tree (so that it won't even show in `lspci` output), and this will prevent the nvidia module to be loaded, so that we can take advantage of the
