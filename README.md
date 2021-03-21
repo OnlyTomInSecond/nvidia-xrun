@@ -11,11 +11,21 @@ Here is the official tutorial, but I just adjusted a little .... :-)
 # nvidia-xrun #
 These utility scripts aim to make the life easier for nvidia cards users.It started with a revelation that bumblebee in current state offers very poor performance. This solution offers a bit more complicated procedure but offers a full GPU utilization(in terms of linux drivers)
 
-## Usage:##
+## Usage: ##
   - switch to free tty
   - login
   - run `nvidia-xrun [app]`
   - enjoy
+
+## Installtion ##
+
+To use this , just simplely run 
+
+```
+# ./install.sh
+```
+
+
 
 Currently sudo is required as the script needs to wake up GPU, modprobe the nvidia driver and perform cleanup afterwards.
 
@@ -157,3 +167,4 @@ In that case, you should add `--ignore-install` to `modprobe` calls in `nvidia-x
 Check https://wiki.archlinux.org/index.php/Vulkan
 * remove package vulkan-intel
 * set VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/nvidia_icd.json
+
