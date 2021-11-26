@@ -1,4 +1,4 @@
-[Chinese Translation]()
+[Chinese Translation](https://github.com/OnlyTomInSecond/nvidia-xrun/README_zh_CN.md)
 
 # NOTICE #
 
