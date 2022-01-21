@@ -35,6 +35,7 @@ if [[ -d /etc/X11/xinit/nvidia-xinitrc.d ]] ; then
 fi
 
 xrandr --setprovideroutputsource modesetting NVIDIA-0
+# xrandr --setprovideroutputsource 1 0 # If starts failed, try uncommnet this line to replace .
 xrandr --auto
 
 if [[ -f "$userxinitrc" ]]; then

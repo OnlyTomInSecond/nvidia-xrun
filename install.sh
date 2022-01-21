@@ -2,24 +2,30 @@
 
 echo "Start installtion"
 
+NVIDIA_PCI_BUS_ID=0
+NVIDIA_AUDIO_PCI_ID=0
+
 function get_info(){
 echo "Get the basic information:"
 # The bus id of nvidia card
 NVIDIA_PCI_BUS_ID=`lspci | grep -i vga | grep -i nvidia | cut -d ' ' -f 1`
-# echo "The NVIDIA GPU id : $NVIDIA_PCI_BUS_ID"
+echo "The NVIDIA GPU id : $NVIDIA_PCI_BUS_ID"
 NVIDIA_AUDIO_PCI_ID=`lspci | grep -i nvidia | grep -i audio | cut -d ' ' -f 1`
 echo "The NVIDIA Audio device id : $NVIDIA_AUDIO_PCI_ID"
-if [ -z "${NVIDIA_PCI_BUS_ID}" ];then
-	echo "Found nvidia card"
-	if [ -z "${NVIDIA_AUDIO_PCI_ID}" ];then
+
+if [ -n ${NVIDIA_PCI_BUS_ID} ];then
+	echo "Found nvidia gpu"
+	if [ -n ${NVIDIA_AUDIO_PCI_ID} ];then 
 		echo "Found nvidia audio device"
+	else 
+		echo "No audio device"
 	fi
 else
-	echo "Error,Can;t find nvidia card! Exiting"
-	exit 0
+	echo "Not found nvidia gpu,exiting"
+	exit 1;
 fi
-
 }
+
 function find_acpi_support(){
 if [ ! -f /sys/bus/pci/devices/0000:${NVIDIA_PCI_BUS_ID}/remove ] ||
    [ ! -f /sys/bus/pci/devices/0000:${NVIDIA_AUDIO_PCI_ID}/remove ];then
@@ -31,15 +37,22 @@ else
 fi
 }
 
-get_info
+function modify_pcie_address(){
+	echo "try to auto config"
+	sed -i 's/.*DEVICE_BUS_ID.*/DEVICE_BUS_ID=0000:'${NVIDIA_PCI_BUS_ID}'/' ./config/nvidia-xrun
+	sed -i 's/.*AUDIO_DEVICE_BUS_ID.*/AUDIO_DEVICE_BUS_ID=0000:'${NVIDIA_AUDIO_PCI_ID}'/' ./config/nvidia-xrun
+	echo "success"
+}
 
-if [ find_acpi_support == 1 ];then
+function install(){
+    if [ find_acpi_support == 1 ];then
 	echo "Now copy the files"
 	sudo cp ./nvidia-xrun /usr/bin/
 	sudo cp ./nvidia-xinitrc /etc/X11/xinit
 	sudo mkdir /etc/X11/nvidia-xorg.conf.d
 	sudo cp ./nvidia-xrun-pm.service /etc/systemd/system/
 	sudo cp ./config/nvidia-xrun /etc/default/
+	echo "Add module blacklist "
 	sudo cp ./modules/nvidia-xrun_blacklist.conf /etc/modprobe.d/
 
 	echo "update systemd-daemon"
@@ -49,7 +62,11 @@ if [ find_acpi_support == 1 ];then
 	echo "Update initramfs"
 	sudo mkinitcpio -P
 	echo "Done"
-else
+    else
 	echo "Failed!"
-fi
+    fi
+}
 
+get_info
+find_acpi_support
+modify_pcie_address
