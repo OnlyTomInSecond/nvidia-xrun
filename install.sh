@@ -46,6 +46,8 @@ function modify_pcie_address(){
 
 function install(){
     if [ find_acpi_support == 1 ];then
+#	echo "Try autoconfig"
+#	modify_pcie_address
 	echo "Now copy the files"
 	sudo cp ./nvidia-xrun /usr/bin/
 	sudo cp ./nvidia-xinitrc /etc/X11/xinit
@@ -70,3 +72,6 @@ function install(){
 get_info
 find_acpi_support
 modify_pcie_address
+install
+
+
