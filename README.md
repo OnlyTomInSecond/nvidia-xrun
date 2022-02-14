@@ -2,7 +2,7 @@
 
 # NOTICE #
 
-### This is a fork from office nvidia-xrun repo , and I just did a minor changes and not tested yet.Only test nvidia-xrun-pm.service ###
+### This is a fork from official nvidia-xrun repo , and I just did a minor changes and not tested yet.Only test nvidia-xrun-pm.service ###
 
 ### If the monitor output mode is iGPU(Using amdgpu),you can enable the nvidia-xrun-pm.service , but in dGPU mode you must disable it Otherwise the monitor will be black!!! ###
 
@@ -48,7 +48,7 @@ When the nvidia-xrun command is used, the device is added again to the tree so t
 * **/etc/default/nvidia-xrun** - nvidia-xrun config file (./config/nvdia-xrun)
 * **/usr/share/xsessions/nvidia-xrun-openbox.desktop** - xsession file for openbox (./launchers/nvidia-xrun-openbox.desktop)
 * **/usr/share/xsessions/nvidia-xrun-plasma.desktop** - xsession file for plasma (./launchers/nvidia-xrun-plasma.desktop)
-* **[OPTIONAL] $XDG_CONFIG_HOME/X11/nvidia-xinitrc** - user-level custom xinit script file. You can put here your favourite window manager for example
+* **[OPTIONAL] $XDG_CONFIG_HOME/X11/nvidia-xinitrc** - user-level custom xinit script file. You can set your favourite window manager here for example
 
 
 
@@ -160,3 +160,8 @@ Check https://wiki.archlinux.org/index.php/Vulkan
 * remove package vulkan-intel
 * set VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/nvidia_icd.json
 
+## Reference ##
+
+- [How to get Nvidia-xRun on Debian](https://daniele.tech/2019/12/how-to-get-nvidia-xrun-on-debian/)
+
+- [Debian wiki](https://wiki.debian.org/NvidiaGraphicsDrivers/NvidiaXrun)
