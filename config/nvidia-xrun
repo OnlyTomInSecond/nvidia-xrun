@@ -1,9 +1,11 @@
 # When enabled, nvidia-xrun will turn the card on before attempting to load the
 # modules and running the command, and turn it off after the commands exits and
 # the modules gets unloaded. If order for this to work, CONTROLLER_BUS_ID and
-DEVICE_BUS_ID=0000:01:00.0
+
 # output of lshw.
 ENABLE_PM=1
+DEVICE_BUS_ID=0000:01:00.0
+AUDIO_DEVICE_BUS_ID=0000:01:00.1
 
 # When PM is enabled, remove the card from the system after the command exists
 # and modules unload: the card will be readded in the next nvidia-xrun
@@ -17,9 +19,7 @@ REMOVE_DEVICE=1
 CONTROLLER_BUS_ID=0000:00:01.1
 
 # Bus ID of the graphic card
-DEVICE_BUS_ID=0000:01:00.0
 # Audio Device
-DEVICE_BUS_ID=0000:01:00.0
 
 # Seconds to wait before turning on the card after PCI devices rescan
 BUS_RESCAN_WAIT_SEC=1

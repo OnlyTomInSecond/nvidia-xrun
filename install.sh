@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 echo "Start installtion"
 
@@ -39,13 +39,18 @@ fi
 
 function modify_pcie_address(){
 	echo "try to auto config"
-	sed -i 's/.*DEVICE_BUS_ID.*/DEVICE_BUS_ID=0000:'${NVIDIA_PCI_BUS_ID}'/' ./config/nvidia-xrun
-	sed -i 's/.*AUDIO_DEVICE_BUS_ID.*/AUDIO_DEVICE_BUS_ID=0000:'${NVIDIA_AUDIO_PCI_ID}'/' ./config/nvidia-xrun
+	#sed -i 's/.*DEVICE_BUS_ID.*/DEVICE_BUS_ID=0000:'${NVIDIA_PCI_BUS_ID}'/' ./config/nvidia-xrun
+	#sed -i 's/.*AUDIO_DEVICE_BUS_ID.*/AUDIO_DEVICE_BUS_ID=0000:'${NVIDIA_AUDIO_PCI_ID}'/' ./config/nvidia-xrun
+
+	sed -i '/DEVICE_BUS_ID/d' ./config/nvidia-xrun
+	sed -i '/AUDIO_DEVICE_BUS_ID/d' ./config/nvidia-xrun
+	sed -i '6aDEVICE_BUS_ID=0000:'${NVIDIA_PCI_BUS_ID}'' ./config/nvidia-xrun
+	sed -i '7aAUDIO_DEVICE_BUS_ID=0000:'${NVIDIA_AUDIO_PCI_ID}'' ./config/nvidia-xrun
 	echo "success"
 }
 
 function install(){
-    if [ find_acpi_support == 1 ];then
+    if [ find_acpi_support ];then
 #	echo "Try autoconfig"
 #	modify_pcie_address
 	echo "Now copy the files"
