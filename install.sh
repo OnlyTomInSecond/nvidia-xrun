@@ -56,14 +56,14 @@ function install(){
 	echo "Now copy the files"
 	sudo cp ./nvidia-xrun /usr/bin/
 	sudo cp ./nvidia-xinitrc /etc/X11/xinit
-	sudo mkdir /etc/X11/nvidia-xorg.conf.d
+#	sudo mkdir /etc/X11/nvidia-xorg.conf.d
 	sudo cp ./nvidia-xrun-pm.service /etc/systemd/system/
 	sudo cp ./config/nvidia-xrun /etc/default/
 	echo "Add module blacklist "
 	sudo cp ./modules/nvidia-xrun_blacklist.conf /etc/modprobe.d/
 
 	echo "update systemd-daemon"
-	sudo systemctl deamon-reload
+	sudo systemctl daemon-reload
 	echo "enable nvidia-xrun-pm.service"
 	sudo systemctl enable nvidia-xrun-pm.service
 	echo "Update initramfs"
